@@ -74,7 +74,10 @@ while True:
 
             try:
                 # using google speech recognition
-                keyboard.type(r.recognize_google(audio_text))
+                if r.recognize_google(audio_text) == 'enter':
+                    keyboard.type('\n')
+                else:
+                    keyboard.type(r.recognize_google(audio_text))
             except:
                 print("Sorry, I did not get that")
             mouth = 0

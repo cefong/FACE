@@ -69,7 +69,7 @@ def get_mouth_ratio(mouth_points, facial_landmarks):
 
 def detect_mouth_open(mouth_ratio):
 
-    if mouth_ratio > 0.7:
+    if mouth_ratio > 0.8:
         return 1
 
     return 0

@@ -1,4 +1,4 @@
-# FACE - the fully accessible controller emulator
+# FACE - the facially accessible controller emulator
 a hands free computer interface - look ma, no hands! 
 
 # Dependencies

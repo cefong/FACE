@@ -48,9 +48,10 @@ cap.release()
 cv2.destroyAllWindows()
 '''
 import speech_recognition as sr
+from pynput.keyboard import Controller
 
 r = sr.Recognizer()
-
+keyboard = Controller()
 with sr.Microphone() as source:
 	print("Talk")
 	audio_text = r.listen(source)
@@ -58,6 +59,6 @@ with sr.Microphone() as source:
 
 try:
     # using google speech recognition
-    print("Text: "+r.recognize_google(audio_text))
+    keyboard.type(r.recognize_google(audio_text))
 except:
     print("Sorry, I did not get that")

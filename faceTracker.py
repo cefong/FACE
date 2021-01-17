@@ -22,6 +22,7 @@ scale = 8
 # set the max size of the buffer
 side = 0
 blink = 0
+mouth = 0
 
 while True:
     _, frame = cap.read()
@@ -55,6 +56,29 @@ while True:
         right_ratio = get_eye_ratio([42, 43, 44, 45, 46, 47], landmarks)
         ratio_average = (right_ratio + left_ratio)/2
 
+        # numbers 49 - 56 depict inner mouth points
+        mouth_ratio = get_mouth_ratio([49,50,51,52,53,54,55,56], landmarks)
+
+       #if mouth_ratio > 0.7:
+        #        cv2.putText(frame, "MOUTH OPEN.", (300, 300), cv2.FONT_HERSHEY_PLAIN, 3, (255, 255, 0))
+        mouthInc = detect_mouth_open(mouth_ratio)
+        mouth += mouthInc
+
+        if mouth > 3:
+            r = sr.Recognizer()
+            keyboard = keyboardController()
+            with sr.Microphone() as source:
+                cv2.putText(frame, "Talk.", (300, 300), cv2.FONT_HERSHEY_PLAIN, 3, (255, 255, 0))
+                audio_text = r.listen(source)
+                cv2.putText(frame, "Time's Up.", (300, 300), cv2.FONT_HERSHEY_PLAIN, 3, (255, 255, 0))
+
+            try:
+                # using google speech recognition
+                keyboard.type(r.recognize_google(audio_text))
+            except:
+                print("Sorry, I did not get that")
+            mouth = 0
+
         blinkInc, sideInc = detectBlink(left_ratio, right_ratio)
         blink += blinkInc
 
@@ -68,7 +92,7 @@ while True:
             mouse.move(difference[0], difference[1])
             side += sideInc
             # print("side value: " + str(side))
-            if side < -3:
+            if side < -2:
                 print("Current position of point: " + str(landmarks.part(36).x))
                 print("Lower Bound: " + str(initialPosition[0] - scale))
                 print("Upper Bound: " + str(initialPosition[2] - quarter))

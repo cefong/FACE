@@ -1,5 +1,8 @@
 import cv2
 from pynput.mouse import Button, Controller
+from pynput.keyboard import Controller as keyboardController
+import speech_recognition as sr
+
 from math import hypot
 
 # measure how far the head tilt is from the initial position
@@ -49,3 +52,24 @@ def detectBlink(left_ratio, right_ratio):
     else:
         # blink--
         return (0, 0)
+
+# function to detect mouth ratio
+def get_mouth_ratio(mouth_points, facial_landmarks):
+
+    center_top = (facial_landmarks.part(mouth_points[2]).x, facial_landmarks.part(mouth_points[2]).y)
+    center_bottom = (facial_landmarks.part(mouth_points[6]).x, facial_landmarks.part(mouth_points[6]).y)
+    left_point = (facial_landmarks.part(mouth_points[0]).x, facial_landmarks.part(mouth_points[0]).y) 
+    right_point = (facial_landmarks.part(mouth_points[4]).x, facial_landmarks.part(mouth_points[4]).y)
+
+    hor_line_length = hypot((left_point[0] - right_point[0]), (left_point[1] - right_point[1]))
+    ver_line_length = hypot((center_top[0] - center_bottom[0]), (center_top[1] - center_bottom[1]))
+
+    ratio = ver_line_length/hor_line_length
+    return ratio
+
+def detect_mouth_open(mouth_ratio):
+
+    if mouth_ratio > 0.7:
+        return 1
+
+    return 0

@@ -1,3 +1,4 @@
+'''
 import cv2 # importing OpenCV for python
 import numpy as np
 
@@ -45,3 +46,18 @@ while True:
 
 cap.release()
 cv2.destroyAllWindows()
+'''
+import speech_recognition as sr
+
+r = sr.Recognizer()
+
+with sr.Microphone() as source:
+	print("Talk")
+	audio_text = r.listen(source)
+	print("time up")
+
+try:
+    # using google speech recognition
+    print("Text: "+r.recognize_google(audio_text))
+except:
+    print("Sorry, I did not get that")

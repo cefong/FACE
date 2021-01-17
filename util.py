@@ -4,13 +4,16 @@ from math import hypot
 
 # measure how far the head tilt is from the initial position
 def measureTiltDistance(initialPosition, currentPosition, scale):
-    # words = ["left", "top"]
     difference = [0,0]
-    for i in range(0, 2):
-        # print("Current distance is " + str(initialPosition[i] - currentPosition[i]) + " from the " + words[i])
-        difference[i] = (currentPosition[i] - initialPosition[i])/5
-        if (difference[i] > -scale and difference[i] < scale):
-            difference[i] = 0
+    # tilt left
+    difference[0] = (currentPosition[0] - initialPosition[0])/10
+    if (difference[0] > -scale and difference[0] < scale):
+        difference[0] = 0
+
+    # tilt top
+    difference[1] = (currentPosition[1] - initialPosition[1])/7
+    if (difference[0] > -(scale+2) and difference[0] < (scale-2)):
+        difference[0] = 0
     return difference
 
 # functions used to detect blinking
@@ -35,11 +38,14 @@ def get_eye_ratio(eye_points, facial_landmarks):
     return ratio
 
 def detectBlink(left_ratio, right_ratio):
+    if left_ratio < blink_ratio and right_ratio < blink_ratio:
+        return (1, 0)
     if left_ratio < blink_ratio and right_ratio > blink_ratio:
         # left blink
-        return -1
+        return (0, -1)
     if right_ratio < blink_ratio and left_ratio > blink_ratio:
         # right blink
-        return 1
+        return (0, 1)
     else:
-        return 0
+        # blink--
+        return (0, 0)

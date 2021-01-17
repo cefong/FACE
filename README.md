@@ -13,6 +13,7 @@ This project requires Python 3.7 interpreter, as well as opencv-python, dlib, Sp
 
 ## Calibration
 Before you can use the controller emulator to control the keyboard and mouse input, you need to mark the neutral position of your face in the screen. This can be done either by positioning your face and hitting the space bar, or by holding both eyes closed for 5-10 seconds. After the neutral position is calibrated, you should see a dark blue box, indicating the neutral position of your face, and a light blue box within it that will be used for special controls. 
+
 NOTE: Calibration can be performed at any point while the program is running! Simply position your face to the desired neutral position and follow the same instructions as above :)
 
 ## Mouse input

@@ -1,5 +1,5 @@
-# FACE
-fully accessible controller emulator
+# FACE - the fully accessible controller emulator
+a hands free computer interface - look ma, no hands! 
 
 # Dependencies
 This project requires Python 3.7 interpreter, as well as opencv-python, dlib, SpeechRecognition, and pynput packages to be installed
